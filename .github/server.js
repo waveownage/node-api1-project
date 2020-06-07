@@ -13,6 +13,7 @@ server.post("/users", (req, res) => {
     }
     const newUser = db.createUser({
         name: req.body.name,
+        bio: req.body.bio,
     })
     res.status(201).json(newUser)
 })
@@ -41,6 +42,7 @@ server.put("/users/:id", (req, res) => {
     if (user) {
         const updatedUser = db.updateUser(user.id, {
             name: req.body.name || user.name,
+            bio: req.body.bio || user.bio,
         })
         res.json(updatedUser)
     } else {
@@ -58,7 +60,7 @@ server.delete("/users/:id", (req, res) => {
 } else { return res.status(404).json({
     message: "User Not Found",
 
-})
+})}})
 
 server.listen(8080, ()=> {
     console.log("server started on port 8080")
