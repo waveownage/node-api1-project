@@ -36,6 +36,22 @@ server.post("/users", (req, res) => {
     res.status(201).json(newUser)
 })
 
+server.put("/users/:id", (req, res) => {
+    const user = db.getUserById(req.params.id)
+
+    if (user) {
+        const updatedUser = db.updateUser(user.id, {
+            name: req.body.name || user.name,
+            bio: req.body.bio || user.bio,
+        })
+        res.json(updatedUser)
+    } else {
+        return res.status(400).json({
+            message: "Need a name for the User",
+    })}
+
+})
+
 server.listen(8080, ()=> {
     console.log("server started on port 8080")
 })
